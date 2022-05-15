@@ -19,7 +19,8 @@
 
 <body style="background-color: grey;">
 	<p id="header">
-		<span id="user"> <%
+		<span id="user"> 
+<%
  AccountDTO user = (AccountDTO) session.getAttribute("user");
  if (user == null) {
  	out.println("Guest User <a href=" + "\"login\"" + ">login</a>");

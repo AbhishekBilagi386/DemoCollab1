@@ -17,7 +17,8 @@
 <title>Transaction Page</title>
 </head>
 <body>
- <%AccountDTO user = (AccountDTO) session.getAttribute("user");
+ <%
+ AccountDTO user = (AccountDTO) session.getAttribute("user");
  %>
 <h1>Transaction Page for:<%=user.getName() %></h1>
 	<div class="container">
@@ -37,7 +38,8 @@
 					<br>
 					<div class="form-group">
 						<label for="Deposit">Deposit:</label> <input type="radio"
-							name="radio" id="radio1"> <label for="Withdraw">Withdraw:</label>
+							name="radio" id="radio1"> 
+						<label for="Withdraw">Withdraw:</label>
 						<input type="radio" name="radio" id="radio2">
 					</div>
 					<br>
