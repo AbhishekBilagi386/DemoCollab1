@@ -1,6 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<%@page import="com.monocept.dto.AccountDTO"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,34 +11,22 @@
 	integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
 	crossorigin="anonymous"></script>
 <meta charset="ISO-8859-1">
-<title>Dashboard</title>
+<title>Insert title here</title>
 </head>
-
-<body style="background-color: grey;">
-	<p id="header">
-		<span id="user"> <%
- AccountDTO user = (AccountDTO) session.getAttribute("user");
- if (user == null) {
- 	out.println("Guest User <a href=" + "\"login\"" + ">login</a>");
- } else {
- 	out.println(user.getName() + "\n" + user.getBalance() + "<a href=" + "\"logout\"" + ">logout</a>");
- }
- %>
-		</span>
-	</p>
-	<div align="center">
+<body>
+<div align="center">
 		<h1>
-			<u><i>Dashboard</i></u>
+			<i>Welcome to Banking MVC App</i>
 		</h1>
-		<br> <br> <a href="passbook">
+		<br> <br> <a href="login">
 			<button type="button" class="btn btn-warning hell"
 				aria-haspopup="true" aria-expanded="false" style="width: 50%">
-				<font size="6">View Passbook</font>
+				<font size="6">Login</font>
 			</button>
-		</a> <br> <br> <br> <a href="transaction">
+		</a> <br> <br> <br> <a href="register">
 			<button type="button" class="btn btn-success" aria-haspopup="true"
 				aria-expanded="false" style="width: 50%">
-				<font size="6">View Transactions</font>
+				<font size="6">Register</font>
 			</button>
 		</a>
 	</div>

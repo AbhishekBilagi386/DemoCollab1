@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@page import="com.monocept.model.Transaction"%>
 <%@page import="com.monocept.dto.AccountDTO"%>
-<%@page import = "java.util.List.*" %>
+<%@page import = "java.util.List" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,9 +28,8 @@
 		</span>
 	</p>
 	<h1>PassBook Page</h1>
-	<h1>Transaction page</h1>
 	<div class="form-group">
-		<button type="submit" class="btn btn-success">Download</button>
+		<a href="/download"><button type="submit" id="download" class="btn btn-success">Download</button></a>
 	</div>
 	<table class="table table-striped">
 		<tr>
@@ -40,9 +39,12 @@
 			<th>Date&Time</th>
 		</tr>
 		<%
+		List<Transaction> transactions = (List) request.getAttribute("data");
+	%>
+		<%
 		for (Transaction transaction : transactions) {
-			out.println("<tr><td>" + transaction.getAccountName() + "</td><td>" + transaction.getAmount() + "</td><td>"
-			+ student.getType() + "</td><td>" + student.getDateTime() + "</td></tr>");
+			out.println("<tr><td>" + transaction.getAcccountName() + "</td><td>" + transaction.getAmount() + "</td><td>"
+			+ transaction.getType() + "</td><td>" + transaction.getDateTime() + "</td></tr>");
 		}
 		%>
 	</table>

@@ -4,7 +4,10 @@ $(document).ready(function() {
 		var user = $('#name').val();
 		var balance = $('#balance').val();
 		var password = $('#password').val();
-
+		$("#error").html("");
+		$("#error2").html("");
+		 $("#error3").html("");
+        
 
 		if (user == "") {
 			$("#error").html("**The Username must be filled.");
@@ -16,7 +19,7 @@ $(document).ready(function() {
 			$("#error").css("color", "red");
 			return false;
 		}
-		if (balance=="") {
+		if (balance == "") {
 			$("#error2").html("**Balance must be filled");
 			$("#error2").css("color", "red");
 			return false;
@@ -31,7 +34,7 @@ $(document).ready(function() {
 			$("#error3").css("color", "red");
 			return false;
 		}
-		if (!password.match(/^.*(?=.{8,25})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/)) {
+		if (!password.match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/)) {
 			$("#error3").html("**password should contain at least one digit, at least one lower case,at least one upper case, atleast one special character,atleast 8 characters");
 			$("#error3").css("color", "red");
 			return false;
