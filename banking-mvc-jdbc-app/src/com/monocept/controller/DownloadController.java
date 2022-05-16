@@ -32,6 +32,7 @@ public class DownloadController extends HttpServlet {
 		String name = account.getName();
 		service = TransactionService.getInstance();
 		service.savePassbook(name);
+		response.sendRedirect("passbook");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

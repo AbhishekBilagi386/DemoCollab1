@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import com.monocept.model.Transaction;
-import com.monocept.repository.AccountRepository;
 import com.monocept.repository.TransactionRepository;
 
 public class TransactionService {

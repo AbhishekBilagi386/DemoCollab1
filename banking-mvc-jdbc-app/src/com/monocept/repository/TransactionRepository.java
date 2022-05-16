@@ -50,9 +50,11 @@ public class TransactionRepository {
 					double amount = rs.getDouble(2);
 					String type = rs.getString(3);
 					TransactionType transactionType;
-					if (type.equals(TransactionType.DEPOSIT.toString()))
+					if (type.equals(TransactionType.DEPOSIT.toString())) {
 						transactionType = TransactionType.DEPOSIT;
-					transactionType = TransactionType.WITHDRAW;
+					} else {
+						transactionType = TransactionType.WITHDRAW;
+					}
 					String date = rs.getString(4);
 					Transaction transaction = new Transaction(cName, amount, transactionType, date);
 					transactions.add(transaction);
@@ -67,17 +69,18 @@ public class TransactionRepository {
 
 	public void doTransaction(Transaction transaction, double balanceBeforeTransaction) {
 		double balanceAfterTransaction = 0;
-		if (transaction.getType().toString().equalsIgnoreCase("Deposit"))
+		if (transaction.getType().equalsIgnoreCase("Deposit")) {
 			balanceAfterTransaction = balanceBeforeTransaction + transaction.getAmount();
-		balanceAfterTransaction = balanceBeforeTransaction - transaction.getAmount();
-
+		} else if (transaction.getType().equalsIgnoreCase("Withdraw")) {
+			balanceAfterTransaction = balanceBeforeTransaction - transaction.getAmount();
+		}
 		Connection con = getConnection();
 		try {
 			con.setAutoCommit(false);
 			Statement statement = con.createStatement();
 			String transactionTableQuery = "INSERT INTO bank_transaction (c_name, amount, t_type, t_date)" + "VALUES ("
 					+ "\'" + transaction.getAcccountName() + "\'" + ", " + transaction.getAmount() + ", " + "\'"
-					+ transaction.getType().toString() + "\'" + ", " + "\'" + transaction.getDateTime() + "\'" + ");";
+					+ transaction.getType() + "\'" + ", " + "\'" + transaction.getDateTime() + "\'" + ");";
 
 			String masterTableQuery = "Update bank_master SET balance=" + balanceAfterTransaction + " WHERE c_name="
 					+ "\'" + transaction.getAcccountName() + "\'";
@@ -100,14 +103,14 @@ public class TransactionRepository {
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
 	public void savePassbook(String name) throws IOException {
 		Connection con = getConnection();
 		try {
 			String selectAccount = "SELECT c_name, amount, t_type, t_date FROM bank_transaction WHERE c_name=? ORDER BY (t_date)";
 			PreparedStatement statement = con.prepareStatement(selectAccount);
 			statement.setString(1, name);
-			
+
 			CSVWriter writer = new CSVWriter(new FileWriter("resources/yourfile.csv"));
 			Boolean includeHeaders = true;
 
