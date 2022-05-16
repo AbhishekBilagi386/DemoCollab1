@@ -17,14 +17,15 @@
 <title>Dashboard</title>
 </head>
 
-<body style="background-color: grey;">
+<body style="background-color: white;">
 	<p id="header">
-		<span id="user"> <%
- AccountDTO user = (AccountDTO) session.getAttribute("user");
+		<span id="user" align="right"> <%
+ 	AccountDTO user = (AccountDTO) session.getAttribute("user");
  if (user == null) {
- 	out.println("Guest User <a href=" + "\"login\"" + ">login</a>");
+ 	out.println("Guest User  <a href=" + "\"login\"" + ">login</a>");
  } else {
- 	out.println(user.getName() + "\n" + user.getBalance() + "<a href=" + "\"logout\"" + ">logout</a>");
+ 	out.println("<h5>" + user.getName() + "  <a href=" + "\"logout\"" + ">logout</a></h5>");
+ 	out.println("<h6>Balance: " + user.getBalance() + "</h6>");
  }
  %>
 		</span>
@@ -41,7 +42,7 @@
 		</a> <br> <br> <br> <a href="transaction">
 			<button type="button" class="btn btn-success" aria-haspopup="true"
 				aria-expanded="false" style="width: 50%">
-				<font size="6">View Transactions</font>
+				<font size="6">Do Transactions</font>
 			</button>
 		</a>
 	</div>

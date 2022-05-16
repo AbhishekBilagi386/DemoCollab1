@@ -9,10 +9,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.monocept.dto.AccountDTO;
 import com.monocept.model.Transaction;
 import com.monocept.service.TransactionService;
-
 
 /**
  * Servlet implementation class PassbookController
@@ -21,16 +22,20 @@ import com.monocept.service.TransactionService;
 public class PassbookController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TransactionService service;
-	private List<Transaction> transactions;   
+	private List<Transaction> transactions;
 
-    public PassbookController() {
-        super();
+	public PassbookController() {
+		super();
 
-    }
+	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		service = TransactionService.getInstance();
-		transactions = service.getTransactions();
+		HttpSession session = request.getSession();
+		AccountDTO userDto = (AccountDTO) session.getAttribute("user");
+		String name = userDto.getName();
+		transactions = service.getTransactions(name);
 
 		request.setAttribute("data", transactions);
 
@@ -38,9 +43,10 @@ public class PassbookController extends HttpServlet {
 		view.forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
-		
+
 	}
 
 }

@@ -29,7 +29,7 @@
 
 					<div class="form-group">
 						<label for="name">User Name:</label> <input type="text"
-							name="uname" id="uname" class="form-control">
+							name="name" id="uname" class="form-control">
 						<div id="error"></div>
 					</div>
 					<br>

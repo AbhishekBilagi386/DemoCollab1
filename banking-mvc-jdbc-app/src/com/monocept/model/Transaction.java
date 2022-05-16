@@ -21,8 +21,8 @@ public class Transaction {
 		return amount;
 	}
 
-	public TransactionType getType() {
-		return type;
+	public String getType() {
+		return type.toString();
 	}
 
 	public String getDateTime() {

@@ -23,7 +23,7 @@ import com.monocept.service.TransactionService;
 public class TransactionController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TransactionService transService;
-	
+
 	public TransactionController() {
 		super();
 	}
@@ -44,14 +44,6 @@ public class TransactionController extends HttpServlet {
 		double balBeforeTransaction = user.getBalance();
 		String name = user.getName();
 		double amount = Double.valueOf(request.getParameter("amount"));
-
-		if ((balBeforeTransaction - amount) < 500) {
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Minimum balance should be 500');");
-			out.println("</script>");
-			response.sendRedirect("transactions.jsp");
-			return;
-		}
 		String type = request.getParameter("radio");
 
 		TransactionType transactionType;
@@ -59,13 +51,21 @@ public class TransactionController extends HttpServlet {
 			transactionType = TransactionType.DEPOSIT;
 		} else {
 			transactionType = TransactionType.WITHDRAW;
+			if ((balBeforeTransaction - amount) < 500) {
+				out.println("<script type=\"text/javascript\">");
+				out.println("alert('Minimum balance should be 500');");
+				out.println("</script>");
+				response.sendRedirect("transactions.jsp");
+				return;
+			}
 		}
+
 		String pattern = "yyyy-MM-dd HH:mm:ss";
 		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
 		String currentTime = sdf.format(new Date());
-		
+
 		Transaction transaction = new Transaction(name, amount, transactionType, currentTime);
-		transService.doTransaction(transaction);
+		transService.doTransaction(transaction, balBeforeTransaction);
 		response.sendRedirect("dashboard");
 	}
 

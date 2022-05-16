@@ -28,19 +28,15 @@
 				<form action="transaction" method="post"
 					onsubmit="return validation();">
 					<div class="form-group">
-						<h1>Transaction Page for:</h1>
-					</div>
-					<br>
-
-					<div class="form-group">
+					
 						<label for="amount">Amount:</label> <input type="number"
 							name="amount" id="amount" class="form-control">
 					</div>
 					<br>
 					<div class="form-group">
 						<label for="Deposit">Deposit:</label> <input type="radio"
-							name="radio" id="radio1"> <label for="Withdraw">Withdraw:</label>
-						<input type="radio" name="radio" id="radio2">
+							name="radio" id="radio1" value="Deposit"> <label for="Withdraw">Withdraw:</label>
+						<input type="radio" name="radio" id="radio2" value="Withdraw">
 					</div>
 					<br>
 					<div class="form-group">

@@ -9,31 +9,33 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.monocept.dto.AccountDTO;
 import com.monocept.model.Transaction;
 import com.monocept.service.TransactionService;
 
-/**
- * Servlet implementation class DownloadController
- */
 @WebServlet("/download")
 public class DownloadController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TransactionService service;
-	private List<Transaction> transactions;  
+	private List<Transaction> transactions;
 
-    public DownloadController() {
-        super();
-    }
-
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		service = TransactionService.getInstance();
-		service.savePassbook();
+	public DownloadController() {
+		super();
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		AccountDTO account = (AccountDTO)session.getAttribute("user");
+		String name = account.getName();
+		service = TransactionService.getInstance();
+		service.savePassbook(name);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 

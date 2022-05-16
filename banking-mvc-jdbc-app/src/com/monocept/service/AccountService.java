@@ -2,6 +2,7 @@ package com.monocept.service;
 
 import com.monocept.dto.AccountDTO;
 import com.monocept.model.Account;
+import com.monocept.model.Transaction;
 import com.monocept.repository.AccountRepository;
 
 public class AccountService {
@@ -34,7 +35,7 @@ public class AccountService {
 		return accountDto;
 	}
 
-	public void registerAccount(Account account) {
-		accountRepository.registerAccount(account);
+	public void registerAccount(Account account, Transaction transaction) {
+		accountRepository.registerAccount(account, transaction);
 	}
 }

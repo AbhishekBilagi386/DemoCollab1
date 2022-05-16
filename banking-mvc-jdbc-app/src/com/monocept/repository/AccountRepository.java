@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.monocept.model.Account;
+import com.monocept.model.Transaction;
 
 public class AccountRepository {
 
@@ -54,18 +55,33 @@ public class AccountRepository {
 		return account;
 	}
 
-	public void registerAccount(Account account) {
+	public void registerAccount(Account account, Transaction transaction) {
 		Connection con = getConnection();
 		try {
 			String registerAccount = "INSERT INTO bank_master (c_name, balance, c_password)" + "VALUES (" + "\'"
 					+ account.getName() + "\'" + ", " + account.getBalance() + ", " + "\'" + account.getPassword()
 					+ "\');";
+			String transactionTableQuery = "INSERT INTO bank_transaction (c_name, amount, t_type, t_date)" + "VALUES ("
+					+ "\'" + transaction.getAcccountName() + "\'" + ", " + transaction.getAmount() + ", " + "\'"
+					+ transaction.getType().toString() + "\'" + ", " + "\'" + transaction.getDateTime() + "\'" + ");";
 			Statement statement = con.createStatement();
-			statement.executeUpdate(registerAccount);
-			System.out.println("Record Inserted");
+			try {
+				int numberOfMasterRowsAffected = statement.executeUpdate(registerAccount);
+				int numberOfTransactionRowsAffected = statement.executeUpdate(transactionTableQuery);
+				
+				if (numberOfTransactionRowsAffected == 1 && numberOfMasterRowsAffected == 1) {
+					con.commit();
+					System.out.println("\nTransaction Succesful\n");
+				} else {
+					con.rollback();
+					System.out.println("\nTransaction Unsuccesful\n");
+				}
+				System.out.println("Record Inserted");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 	}
-
 }

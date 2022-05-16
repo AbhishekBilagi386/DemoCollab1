@@ -1,5 +1,7 @@
 package com.monocept.repository;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,6 +13,7 @@ import java.util.List;
 
 import com.monocept.model.Transaction;
 import com.monocept.model.TransactionType;
+import com.opencsv.CSVWriter;
 
 public class TransactionRepository {
 	public TransactionRepository() {
@@ -93,6 +96,27 @@ public class TransactionRepository {
 				e.printStackTrace();
 			}
 			System.out.println("Record Inserted and Updated");
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void savePassbook(String name) throws IOException {
+		Connection con = getConnection();
+		try {
+			String selectAccount = "SELECT c_name, amount, t_type, t_date FROM bank_transaction WHERE c_name=? ORDER BY (t_date)";
+			PreparedStatement statement = con.prepareStatement(selectAccount);
+			statement.setString(1, name);
+			
+			CSVWriter writer = new CSVWriter(new FileWriter("resources/yourfile.csv"));
+			Boolean includeHeaders = true;
+
+			ResultSet rs = statement.executeQuery();
+
+			writer.writeAll(rs, includeHeaders);
+
+			writer.close();
+
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
